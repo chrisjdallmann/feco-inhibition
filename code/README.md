@@ -3,7 +3,7 @@ The following sections show how to recreate the figures in Dallmann et al. (2024
 
 Connectome figures can be recreated with the Jupyter Notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
 
-Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*`.
+Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*`. The RNA-seq plot can be recreated with the Matlab files `rna-seq_*`.
 
 ## Figure 1  
 Figure 1D: Run `fanc_synapse_locations.ipynb`.
