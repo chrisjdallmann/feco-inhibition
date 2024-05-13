@@ -1,0 +1,10 @@
+caveclient==5.21.0
+ipython==8.12.3
+ipywidgets==8.1.2
+matplotlib==3.8.4
+networkx==3.3
+neuprint-python==0.4.26
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.0
+seaborn==0.13.2
