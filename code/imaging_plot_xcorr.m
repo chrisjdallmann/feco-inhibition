@@ -22,15 +22,17 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.trial_to_highlight = "20211201_A01_00026";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
-settings.ball = 0;
+settings.parquet_file = 'claw_treadmill';
+settings.trial_to_highlight = "20200630_A01_00003";
+settings.ball = 1;
 settings.platform = 0;
 settings.plot_trials = false;
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom',...
     'L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
+
+settings.predict_calcium_signals = false;
+settings.model_activation_function = '';
+settings.model_parameters = [];  
 
 % Load parquet file 
 [parent_folder, ~] = fileparts(cd);
@@ -53,15 +55,11 @@ end
 % Select trials
 trials = unique(data.trial(frames))';
 
-% Set normalization
-if contains(settings.parquet_file,'magnet')
-    calcium_norm_factor = config.calcium_norm_factor.([data.driver{1},'_magnet']);
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.([data.driver{1},'_magnet']);
-else
-    calcium_norm_factor = config.calcium_norm_factor.(data.driver{1});
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.(data.driver{1});
-end
+% Calculate normalization factor
+calcium_norm_factor = max(data.calcium(data.analyze==1));
+predicted_calcium_norm_factor = max(data.predicted_calcium(data.analyze==1));
 
+% Initialize figure
 if settings.plot_trials
     h = figure;
 end
@@ -79,25 +77,25 @@ for iTrial = 1:numel(trials)
     data_trial = data(frames_trial,:);
     
     % Predict calcium signals 
-    model_input = [];
-    model_input(:,1) = data_trial.L1C_flex;
-    if contains(settings.parquet_file,'9A')
-        model_input(:,2) = data_trial.annotation;
+    if settings.predict_calcium_signals  
+        model_input = [];
+        model_input(:,1) = data_trial.L1C_flex;
+        if contains(settings.parquet_file,'9A')
+            model_input(:,2) = data_trial.annotation;
+        end
+        if contains(settings.parquet_file,'web')
+            model_input(:,1) = data_trial.L1_rest;
+            model_input(data_trial.annotation==1) = 0;
+        end
+        model_input = [repmat(model_input(1,:),1000,1); model_input];
+        predicted_calcium = imaging_predict_gcamp(...
+            model_input, ...
+            settings.sampling_rate, ...
+            settings.model_activation_function, ...
+            settings.model_parameters);
+        predicted_calcium(1:1000,:) = [];
+        data_trial.predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
     end
-    if contains(settings.parquet_file,'web')
-        model_input(:,1) = data_trial.L1_rest; 
-        model_input(data_trial.annotation==1) = 0;
-    end
-    model_input = [repmat(model_input(1,:),1000,1); model_input]; 
-    predicted_calcium = imaging_predict_gcamp(...
-        model_input, ...
-        settings.sampling_rate, ...
-        settings.model_activation_function, ...
-        settings.model_parameters);
-    predicted_calcium(1:1000,:) = [];
-    predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
-    
-    data_trial.predicted_calcium = predicted_calcium;
     clearvars model_input predicted_calcium
 
     % Normalize calcium signals 
@@ -157,7 +155,7 @@ line([.8,1.2],[median(correlations.r0),median(correlations.r0)],'Color','k')
 if ~isempty(settings.trial_to_highlight)
     c = h.CData;
     c = repmat(c,[numel(correlations.r0) 1]);
-    c(strcmp(trials,settings.trial_to_highlight),:) = [0,153/255,153/255];
+    c(strcmp(trials,settings.trial_to_highlight),:) = [1,0,1];
     h.CData = c;
     clearvars c
 end

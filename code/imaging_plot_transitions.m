@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 13-May-2024
+% Last revision: 03-March-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,21 +22,23 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = '9A_treadmill_platform';
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
-settings.ball = 0;
+settings.parquet_file = 'claw_treadmill';
+settings.ball = 1;
 settings.platform = 0;
 settings.transition_type = 'onset'; % 'onset' 'offset'
 settings.transition_parameter = 'L1_move';
 settings.parameters = {'calcium_norm','predicted_calcium_norm'};
-settings.L1C_flex_thresholds = [0,360]; 
+settings.L1C_flex_thresholds = [70,90]; 
 settings.win_pre_transition = .5; 
 settings.win_post_transition = .5; 
 settings.baseline_type = 'mean_pre'; % 'mean_pre' 'mean_post' 'min'
 settings.plot_trials = false;
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom',...
     'L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
+
+settings.predict_calcium_signals = false;
+settings.model_activation_function = '';
+settings.model_parameters = [];  
 
 % Load parquet file 
 [parent_folder, ~] = fileparts(cd);
@@ -59,15 +61,11 @@ end
 % Select trials
 trials = unique(data.trial(frames))';
 
-% Set normalization
-if contains(settings.parquet_file,'magnet')
-    calcium_norm_factor = config.calcium_norm_factor.([data.driver{1},'_magnet']);
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.([data.driver{1},'_magnet']);
-else
-    calcium_norm_factor = config.calcium_norm_factor.(data.driver{1});
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.(data.driver{1});
-end
+% Calculate normalization factor
+calcium_norm_factor = max(data.calcium(data.analyze==1));
+predicted_calcium_norm_factor = max(data.predicted_calcium(data.analyze==1));
 
+% Initialize figure
 if settings.plot_trials
     h = figure;
 end
@@ -81,28 +79,28 @@ for iTrial = 1:numel(trials)
     frames_trial = strcmp(data.trial,trials{iTrial});
     data_trial = data(frames_trial,:);
     
-    % Predict calcium signals   
-    model_input = [];
-    model_input(:,1) = data_trial.L1C_flex;
-    if contains(settings.parquet_file,'9A')
-        model_input(:,2) = data_trial.annotation;
+    % Predict calcium signals  
+    if settings.predict_calcium_signals  
+        model_input = [];
+        model_input(:,1) = data_trial.L1C_flex;
+        if contains(settings.parquet_file,'9A')
+            model_input(:,2) = data_trial.annotation;
+        end
+        if contains(settings.parquet_file,'web')
+            model_input(:,1) = data_trial.L1_rest;
+            model_input(data_trial.annotation==1) = 0;
+        end
+        model_input = [repmat(model_input(1,:),1000,1); model_input];
+        predicted_calcium = imaging_predict_gcamp(...
+            model_input, ...
+            settings.sampling_rate, ...
+            settings.model_activation_function, ...
+            settings.model_parameters);
+        predicted_calcium(1:1000,:) = [];
+        data_trial.predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
     end
-    if contains(settings.parquet_file,'web')
-        model_input(:,1) = data_trial.L1_rest;
-        model_input(data_trial.annotation==1) = 0;
-    end
-    model_input = [repmat(model_input(1,:),1000,1); model_input];
-    predicted_calcium = imaging_predict_gcamp(...
-        model_input, ...
-        settings.sampling_rate, ...
-        settings.model_activation_function, ...
-        settings.model_parameters);
-    predicted_calcium(1:1000,:) = [];
-    predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
-
-    data_trial.predicted_calcium = predicted_calcium;
     clearvars model_input predicted_calcium
-   
+
     % Normalize calcium signals 
     data_trial.calcium_norm = data_trial.calcium./calcium_norm_factor;
     data_trial.predicted_calcium_norm = data_trial.predicted_calcium./predicted_calcium_norm_factor;
@@ -258,7 +256,7 @@ disp(['Number of animals: ', num2str(length(n_trans_per_animal))])
 disp(['Number of transitions per animal: ', num2str(n_trans_per_animal)])
 
 % Plot mean transitions
-parameter_to_plot = 'calcium_norm';
+parameter_to_plot = 'predicted_calcium_norm';
 y1 = transitions.(['mean_',parameter_to_plot]);
 y2 = transitions.(['grand_mean_',parameter_to_plot]);
 y3 = transitions.(['sem_',parameter_to_plot]);

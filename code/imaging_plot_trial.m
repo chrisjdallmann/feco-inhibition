@@ -22,11 +22,13 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = '9A_treadmill_platform';
-settings.trials = "20221118_A01_00023";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
-settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
+settings.parquet_file = 'claw_treadmill';
+settings.trials = "20200630_A01_00003";
+settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
+
+settings.predict_calcium_signals = false;
+settings.model_activation_function = '';
+settings.model_parameters = [];  
 
 % Load parquet file 
 [parent_folder, ~] = fileparts(cd);
@@ -38,15 +40,11 @@ settings.sampling_rate = ceil(1/data.time(2));
 config = toml.read('imaging_config.toml');
 config = toml.map_to_struct(config);
 
-% Set normalization
-if contains(settings.parquet_file,'magnet')
-    calcium_norm_factor = config.calcium_norm_factor.([data.driver{1},'_magnet']);
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.([data.driver{1},'_magnet']);
-else
-    calcium_norm_factor = config.calcium_norm_factor.(data.driver{1});
-    predicted_calcium_norm_factor = config.predicted_calcium_norm_factor.(data.driver{1});
-end
+% Calculate normalization factor
+calcium_norm_factor = max(data.calcium(data.analyze==1));
+predicted_calcium_norm_factor = max(data.predicted_calcium(data.analyze==1));
 
+% Initialize figure
 h = figure;
 
 % Loop through trials
@@ -57,7 +55,7 @@ for iTrial = 1:numel(settings.trials)
     data_trial = data(frames_trial,:);
     
     % Predict calcium signals 
-    if ~isempty(settings.model_activation_function)
+    if settings.predict_calcium_signals  
         model_input = [];
         model_input(:,1) = data_trial.L1C_flex;
         if contains(settings.parquet_file,'9A')
@@ -67,19 +65,16 @@ for iTrial = 1:numel(settings.trials)
             model_input(:,1) = data_trial.L1_rest;
             model_input(data_trial.annotation==1) = 0;
         end
-        model_input = [repmat(model_input(1,:),1000,1); model_input]; 
+        model_input = [repmat(model_input(1,:),1000,1); model_input];
         predicted_calcium = imaging_predict_gcamp(...
             model_input, ...
             settings.sampling_rate, ...
             settings.model_activation_function, ...
             settings.model_parameters);
         predicted_calcium(1:1000,:) = [];
-        predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
-        
-        data_trial.predicted_calcium = predicted_calcium;
-
-        clearvars model_input predicted_calcium
+        data_trial.predicted_calcium = predicted_calcium-min(predicted_calcium(data_trial.analyze==1));
     end
+    clearvars model_input predicted_calcium
 
     % Normalize calcium signals 
     data_trial.calcium_norm = data_trial.calcium./calcium_norm_factor;
