@@ -3,7 +3,34 @@ The following sections show how to recreate the figures in Dallmann et al. (2024
 
 Connectome figures can be recreated with the Jupyter Notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
 
-Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*`. The RNA-seq plot can be recreated with the Matlab files `rna-seq_*`.
+Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can also be predicted from scratch within the m-files (see instructions below).  
+
+The RNA-seq plot can be recreated with the Matlab files `rna-seq_*`.
+
+# Datasets
+`claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
+`claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (Mamiya et al. 2018). 
+
+`hook_flexion_01_treadmill_platform.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during behavior on and off the treadmill and passive leg movements with the platform.
+`hook_flexion_01_magnet.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet. 
+`hook_flexion_01_magnet_Mamiya2018.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet (Mamiya et al. 2018). 
+
+`hook_flexion_02_treadmill.parquet`: Calcium imaging data from hook flexion axons (driver line 2) during behavior on and off the treadmill.
+
+`hook_extension_treadmill_platform.parquet`: Calcium imaging data from hook extension axons during behavior on and off the treadmill and passive leg movements with the platform.
+`hook_extension_magnet.parquet`: Calcium imaging data from hook extension axons during passive leg movements with the magnet.
+
+`club_treadmill.parquet`: Calcium imaging data from club axons during behavior on and off the treadmill.
+`club_treadmill_removal.parquet`: Calcium imaging data from club axons when the treadmill was removed during the recording. 
+`club_magnet_Mamiya2018.parquet`: Calcium imaging data from club axons during passive leg movements with the magnet (Mamiya et al. 2018). 
+
+`9A_treadmill_platform.parquet`: Calcium imaging data from 9A axons during behavior on and off the treadmill and passive leg movements with the platform.
+`9A_CsChrimson.parquet`: Behavioral data for optogenetic activation of 9A neurons in tethered flies on the treadmill. 
+`9A_GtACR1.parquet`: Behavioral data for optogenetic silencing of 9A neurons in tethered flies on the treadmill. 
+
+`web_treadmill.parquet`: Calcium imaging data from web axons during behavior on the treadmill.
+
+`rna-seq.xls`: RNA-seq data for hook, claw, and club neurons.  
 
 ## Figure 1  
 Figure 1D: Run `fanc_synapse_locations.ipynb`.
@@ -17,8 +44,6 @@ Figure 2D: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
 settings.trials = "20200630_A01_00003";
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
@@ -26,8 +51,6 @@ Figure 2E: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
 settings.trial_to_highlight = "20200630_A01_00003";
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -35,8 +58,6 @@ settings.platform = 0;
 Figure 2F: Run `imaging_plot_epochs.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.ball = 1;
 settings.platform = 0;
 settings.epoch_type = 'L1_rest'; 
@@ -48,8 +69,6 @@ Plot `epochs.calcium_norm_L1_rest` or `epochs.predicted_calcium_norm_L1_rest` ve
 Figure 2G: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -61,13 +80,19 @@ settings.baseline_type = 'mean_pre';
 ```
 Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
 
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'claw';
+settings.model_parameters = [];  
+```
+
 ## Figure 3
 Figure 3B: Run `imaging_plot_trial.m` with these settings:
 ```
-settings.parquet_file = 'hook_flexion_01_treadmill';
+settings.parquet_file = 'hook_flexion_01_treadmill_platform';
 settings.trials = "20210720_A01_00019";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
@@ -75,8 +100,6 @@ Figure 3C: `imaging_plot_xcorr.m` with these settings for the treadmill data:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
 settings.trial_to_highlight = "20210720_A01_00019";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -90,8 +113,6 @@ settings.platform = 1;
 Figure 3D: Run `imaging_plot_epochs.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.parameters = {'calcium_norm','predicted_calcium_norm','L1C_flex'};
@@ -102,8 +123,6 @@ Set `settings.epoch_type` to `'L1_rest'`, `'L1_walk'`, or `'L1_groom'`. Plot `ca
 Figure 3E: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -119,16 +138,12 @@ Figure 3G: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
 settings.trials = "20230209_A01_00004";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.parameters_to_plot = {'analyze','L1_move','annotation','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
 Figure 3H: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.transition_type = 'onset'; 
@@ -141,6 +156,13 @@ settings.baseline_type = 'mean_pre';
 ```
 Plot `calcium_norm` or `predicted_calcium_norm`. 
 
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'hook_flex';
+settings.model_parameters = -50;  
+```
+
 ## Figure 4
 Figure 4A: Run `fanc_feco_connectivity.ipynb`.
 
@@ -152,16 +174,12 @@ Figure 4E: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
 settings.trials = "20221118_A01_00006";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
 Figure 4F: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -177,8 +195,6 @@ Figure 4G: Run `imaging_plot_xcorr.m` with these settings for the treadmill data
 ```
 settings.parquet_file = '9A_treadmill_platform';
 settings.trial_to_highlight = "20221118_A01_00006";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -193,22 +209,25 @@ Figure 4H: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
 settings.trials = "20221118_A01_00039";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','annotation','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
 Figure 4I: Run `imaging_plot_epochs.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.parameters = {'calcium_norm','predicted_calcium_norm','L1C_flex'};
 settings.min_epoch_win = 1; 
 ```
 Set `settings.epoch_type` to `'L1_move'` or `'annotation'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = '9A';
+settings.model_parameters = 50;  
+```
 
 ## Figure 5
 Figure 5A: Run `fanc_9A_connectivity.ipynb`.
@@ -223,16 +242,12 @@ Figure 5H: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'web_treadmill';
 settings.trials = "240122_A01_00026";
-settings.model_activation_function = 'web';
-settings.model_parameters = [];  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
 Figure 5I: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'web_treadmill';
-settings.model_activation_function = 'web';
-settings.model_parameters = [];  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -247,11 +262,16 @@ Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` o
 Figure 5J: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'web_treadmill';
-settings.trial_to_highlight = "240122_A01_00026";
-settings.model_activation_function = 'web';
-settings.model_parameters = [];  
+settings.trial_to_highlight = "240122_A01_00026"; 
 settings.ball = 1;
 settings.platform = 0;
+```
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'web';
+settings.model_parameters = [];  
 ```
 
 ## Figure S2
@@ -285,8 +305,6 @@ Figure S2G: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
 settings.trials = "20191209_A01_00012";
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ``` 
 
@@ -294,10 +312,15 @@ Figure S2H: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'claw_treadmill';
 settings.trial_to_highlight = "20191209_A01_00012";
-settings.model_activation_function = 'claw';
-settings.model_parameters = [];  
 settings.ball = 0;
 settings.platform = 0;
+```
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'claw';
+settings.model_parameters = [];  
 ```
 
 ## Figure S3
@@ -305,8 +328,6 @@ Figure S3A: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
 settings.trials = "20210712_A01_00002";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -314,8 +335,6 @@ Figure S3B: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
 settings.trial_to_highlight = "20210712_A01_00002";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 0;
 ```
@@ -323,8 +342,6 @@ settings.platform = 0;
 Figure S3C: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -339,9 +356,7 @@ Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` o
 Figure S3D: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
-settings.trials = "20200219_A01_00010";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
+settings.trials = "20200219_A01_00010"; 
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
@@ -349,8 +364,6 @@ Figure S3E: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
 settings.trial_to_highlight = "20200219_A01_00010";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -358,8 +371,6 @@ settings.platform = 0;
 Figure S3F: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -375,8 +386,6 @@ Figure S3G: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
 settings.trials = "20200224_A01_00029";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -384,8 +393,6 @@ Figure S3H: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
 settings.trial_to_highlight = "20200224_A01_00029";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 0;
 ```
@@ -393,8 +400,6 @@ settings.platform = 0;
 Figure S3I: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_02_treadmill';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -409,8 +414,6 @@ Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` o
 Figure S3J: Run `imaging_plot_epochs.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_treadmill_platform';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.epoch_type = 'L1_move'; 
@@ -419,13 +422,18 @@ settings.min_epoch_win = .5;
 ```
 Set `settings.epoch_type` to `'L1_move'` or `'annotation'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
 
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'hook_flex';
+settings.model_parameters = -50;  
+```
+
 ## Figure S4
 Figure S4B: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trials = "20211122_A01_00003";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
@@ -433,8 +441,6 @@ Figure S4C: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trial_to_highlight = "20211122_A01_00003";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -442,8 +448,6 @@ settings.platform = 0;
 Figure S4D: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -460,8 +464,6 @@ Figure S4E: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trials = "20211201_A01_00026";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -469,8 +471,6 @@ Figure S4F: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trial_to_highlight = "20211201_A01_00026";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 ```
@@ -478,8 +478,6 @@ settings.platform = 0;
 Figure S4G: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -496,8 +494,6 @@ Figure S4H: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trials = "20230213_A01_00003";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','annotation','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -505,8 +501,6 @@ Figure S4I: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
 settings.trial_to_highlight = "20230213_A01_00003";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 1;
 ```
@@ -514,8 +508,6 @@ settings.platform = 1;
 Figure S4J: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.transition_type = 'onset';
@@ -531,8 +523,6 @@ Plot `calcium_norm` or `predicted_calcium_norm`.
 Figure S4K: Run `imaging_plot_epochs.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.parameters = {'calcium_norm','predicted_calcium_norm','L1C_flex'};
@@ -540,14 +530,17 @@ settings.min_epoch_win = .5;
 ```
 Set `settings.epoch_type` to `'L1_move'` or `'annotation'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
 
-
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'hook_ext';
+settings.model_parameters = 50;  
+```
 
 ## Figure S5
 Figure S5B: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_treadmill_platform';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 1;
 settings.transition_type = 'onset';
@@ -560,12 +553,17 @@ settings.baseline_type = 'mean_pre';
 ```
 Plot `calcium_norm` or `predicted_calcium_norm`. 
 
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'hook_ext';
+settings.model_parameters = 50;  
+```
+
 Figure S5C: Run `imaging_plot_trial.m` with these settings for the left panel:
 ```
 settings.parquet_file = 'hook_flexion_01_magnet';
 settings.trials = "R21D12_09_walkingreplay01_L1_medial";
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.parameters_to_plot = {'analyze','stimulus','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 For the right panel, replace:
@@ -576,8 +574,6 @@ settings.trials = "R21D12_09_groomingreplay01_L1_medial";
 Figure S5D: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_magnet';
-settings.model_activation_function = 'hook_flex';
-settings.model_parameters = -50;  
 settings.transition_type = 'onset'; 
 settings.transition_parameter = 'stimulus';
 settings.parameters = {'calcium_norm','predicted_calcium_norm'};
@@ -592,6 +588,11 @@ Figure S5E: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_flexion_01_magnet';
 settings.trial_to_highlight = [];
+```
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
 settings.model_activation_function = 'hook_flex';
 settings.model_parameters = -50;  
 ```
@@ -600,8 +601,6 @@ Figure S5F: Run `imaging_plot_trial.m` with these settings for the left panel:
 ```
 settings.parquet_file = 'hook_extension_magnet';
 settings.trials = "JR476_04_walkingreplay01_L1_medial";
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','stimulus','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 For the right panel, replace:
@@ -611,9 +610,7 @@ settings.trials = "JR476_03_groomingreplay01_L1_medial";
 
 Figure S5G: Run `imaging_plot_transitions.m` with these settings:
 ```
-settings.parquet_file = 'hook_extension_magnet';
-settings.model_activation_function = 'hook_ext';
-settings.model_parameters = 50;  
+settings.parquet_file = 'hook_extension_magnet'; 
 settings.transition_type = 'onset'; 
 settings.transition_parameter = 'stimulus';
 settings.parameters = {'calcium_norm','predicted_calcium_norm'};
@@ -628,6 +625,11 @@ Figure S5H: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'hook_extension_magnet';
 settings.trial_to_highlight = [];
+```
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
 settings.model_activation_function = 'hook_ext';
 settings.model_parameters = 50;  
 ```
@@ -637,8 +639,6 @@ Figure S6B: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
 settings.trials = "20210609_A01_00002";
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 ```
 
@@ -646,8 +646,6 @@ Figure S6C: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
 settings.trial_to_highlight = "20210609_A01_00002";
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 ```
@@ -655,8 +653,6 @@ settings.platform = 0;
 Figure S6D: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.ball = 1;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -672,8 +668,6 @@ Figure S6E: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
 settings.trials = "20210608_A01_00029";
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -681,8 +675,6 @@ Figure S6F: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
 settings.trial_to_highlight = "20210608_A01_00029";
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 ```
@@ -690,8 +682,6 @@ settings.platform = 0;
 Figure S6G: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill';
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -707,16 +697,12 @@ Figure S6H: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'club_treadmill_removal';
 settings.trials = "20210608_A01_00027";
-settings.model_activation_function = 'club';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','ball','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
 Figure S6I: Run `imaging_plot_epochs.m` with these settings for the left panel:
 ```
 settings.parquet_file = 'club_treadmill_removal';
-settings.model_activation_function = 'club';
-settings.model_parameters = 50; 
 settings.platform = 0;
 settings.epoch_type = 'L1_rest'; 
 settings.parameters = {'calcium_norm','predicted_calcium_norm','L1C_flex'};
@@ -724,13 +710,18 @@ settings.min_epoch_win = 1;
 ```
 Set `settings.ball` to `1` or `0`.
 
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'club';
+settings.model_parameters = 50;  
+```
+
 ## Figure S7
 Figure S7A: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
 settings.trials = "20221118_A01_00023";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
@@ -738,8 +729,6 @@ Figure S7B: Run `imaging_plot_xcorr.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
 settings.trial_to_highlight = "20221118_A01_00023";
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 ```
@@ -747,8 +736,6 @@ settings.platform = 0;
 Figure S7C: Run `imaging_plot_transitions.m` with these settings:
 ```
 settings.parquet_file = '9A_treadmill_platform';
-settings.model_activation_function = '9A';
-settings.model_parameters = 50;  
 settings.ball = 0;
 settings.platform = 0;
 settings.transition_parameter = 'L1_move';
@@ -760,7 +747,12 @@ settings.baseline_type = 'mean_pre';
 ```
 Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
 
-
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = '9A';
+settings.model_parameters = 50;  
+```
 
 ## Figure S8
 Figure S8A: Run `fanc_DN_IN_connectivity.ipynb`.
@@ -774,4 +766,11 @@ settings.trials = "240131_A01_00018";
 settings.model_activation_function = 'web';
 settings.model_parameters = [];  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
+```
+
+To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
+```
+settings.predict_calcium_signals = true;
+settings.model_activation_function = 'web';
+settings.model_parameters = [];  
 ```
