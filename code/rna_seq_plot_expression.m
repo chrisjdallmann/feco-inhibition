@@ -1,8 +1,7 @@
 % RNA_SEQ_PLOT_EXPRESSION.m plots RNA-seq data in Dallmann et al. (2024)
 % 
 % Files required: 
-%    claw_rna-seq.csv
-%    hook_rna-seq.csv
+%    rna-seq.xlsx
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
@@ -13,9 +12,9 @@
 clear, clc
 
 % Load RNA-seq data 
-table_claw = readtable('rna-seq.xlsx','Sheet','claw');
-table_hook = readtable('rna-seq.xlsx','Sheet','hook');
-table_club = readtable('rna-seq.xlsx','Sheet','club');
+table_claw = readtable('../data/rna-seq.xlsx','Sheet','claw');
+table_hook = readtable('../data/rna-seq.xlsx','Sheet','hook');
+table_club = readtable('../data/rna-seq.xlsx','Sheet','club');
 
 data_claw = table_claw{1:end,2:end};
 data_hook = table_hook{1:end,2:end};
@@ -60,7 +59,7 @@ set(gca, ...
     'XtickLabel', table_hook.Properties.VariableNames(2:end), ...
     'TickLabelInterpreter', 'none', ...
     'YTick', [1,2,3], ...
-    'YTickLabel', {'club','hook','claw'})
+    'YTickLabel', {'Club','Hook','Claw'})
 cb = colorbar;
 clim([0,expression_max])
 colormap(flipud(gray))
