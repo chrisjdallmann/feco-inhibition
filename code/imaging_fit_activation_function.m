@@ -12,16 +12,16 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 13-May-2024
+% Last revision: 11-March-2025
 
 % ------------- BEGIN CODE -------------
 
 clear
 
 % Settings
-settings.parquet_file = 'hook_flexion_01_magnet_Mamiya2018';
-settings.model_activation_function = 'hook';
-settings.roi = {'L1_medial'}; % {'L1_x','L1_y','L1_z'} or {'L1_medial'};
+settings.parquet_file = 'club_magnet_Mamiya2018';
+settings.model_activation_function = 'club';
+settings.roi = {'L1_x'}; % {'L1_x','L1_y','L1_z'} or {'L1_medial'} or {'L1_x'};
 settings.n_frames_pad = 1000; % Change manually in poly_fun
 
 % Load parquet file 
@@ -60,8 +60,13 @@ if strcmp(settings.model_activation_function,'claw')
 
     clearvars coeff_0 x y options coeff 
 
-elseif strcmp(settings.model_activation_function,'hook')
-    % For hook, use fixed-kernel model 
+else
+    % For hook and club, use fixed-kernel model 
+    if strcmp(settings.model_activation_function,'hook_flex')  
+        settings.model_parameters = -5; 
+    elseif strcmp(settings.model_activation_function,'club')
+        settings.model_parameters = 5;
+    end
 
     % To avoid edge artifacts from concatenation of trials,
     % calculate prediction per trial, then fit across trials. 
@@ -70,13 +75,13 @@ elseif strcmp(settings.model_activation_function,'hook')
         data_trial.frames = data.trial == trials(iTrial) & frames;
         data_trial.y = data.calcium_norm(data_trial.frames);
         data_trial.x = data.L1C_flex(data_trial.frames);   
-                
+           
         data_trial.y_hat = imaging_predict_gcamp( ...
             data_trial.x, ...
             settings.sampling_rate, ...
-            'hook_flex', ...
-            -5);
-
+            settings.model_activation_function, ...
+            settings.model_parameters);
+    
         y_hat = [y_hat; data_trial.y_hat];
         
         clearvars data_trial   
@@ -100,10 +105,15 @@ if strcmp(settings.model_activation_function,'claw')
         + model.coeff(3).*x.^2 ...
         + model.coeff(4).*x ...
         + model.coeff(5);
-elseif strcmp(settings.model_activation_function,'hook')
+elseif strcmp(settings.model_activation_function,'hook_flex')
     x = (-100:100)';
     y_hat = zeros(numel(x),1); 
     y_hat(x<-5) = 1; 
+elseif strcmp(settings.model_activation_function,'club')
+    x = (-100:100)';
+    y_hat = zeros(numel(x),1); 
+    y_hat(x<-5) = 1;
+    y_hat(x>5) = 1;
 end
 figure
 plot(x, y_hat, 'k')
@@ -124,7 +134,7 @@ calcium = nan(460,numel(trials));
 L1C_flex = nan(460,numel(trials));
 stimulus_type = {};
 roi = {};
-% Loop through trials
+% Loop over trials
 for iTrial = 1:numel(trials)
     data_trial.frames = data_selected.trial == trials(iTrial);
      
@@ -149,8 +159,8 @@ clearvars iTrial
 
 
 %% Plot time courses for a specific stimulus
-stimulus_to_plot = 'ramp_hold_ext_first'; % 'ramp_hold_flex_first' or 'ramp_hold_ext_first' 
-if contains(settings.parquet_file,'claw')
+stimulus_to_plot = 'ramp_hold_flex_first'; % 'ramp_hold_flex_first' or 'ramp_hold_ext_first' 
+if contains(settings.parquet_file,'claw') || contains(settings.parquet_file,'club')
     roi_to_plot = 'L1_x';
 else  
     roi_to_plot = 'L1_medial';
