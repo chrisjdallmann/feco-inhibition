@@ -775,12 +775,12 @@ settings.model_parameters = 50;
 ```
 
 ## Figure S9
-Figure S9C: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `chief_9A` and run script with `source_index` set to `0`, `1`, `2`, `3`, `4`, and `5`.
+Figure S9C: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `'chief_9A'` and run script with `source_index` set to `0`, `1`, `2`, `3`, `4`, and `5`.
 
 Figure S9D and S9E: Run `fanc_DN_IN_connectivity.ipynb`.
 
 ## Figure S10
-Figure S10A: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `web` and run script with `source_index` set to `0`.
+Figure S10A: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `'web'` and run script with `source_index` set to `0`.
 
 Figure S10B: Run `flywire_web_connectivity.ipynb`.
 
