@@ -788,8 +788,6 @@ Figure S10C: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'web_treadmill';
 settings.trials = "240131_A01_00018";
-settings.model_activation_function = 'web';
-settings.model_parameters = [];  
 settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 ```
 
