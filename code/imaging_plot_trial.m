@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 13-May-2024
+% Last revision: 11-March-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,8 +22,8 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'claw_treadmill';
-settings.trials = "20200630_A01_00003";
+settings.parquet_file = 'web_treadmill';
+settings.trials = "240131_A01_00018";
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 
 settings.predict_calcium_signals = false;
