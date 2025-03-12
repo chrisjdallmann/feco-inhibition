@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 03-March-2025
+% Last revision: 11-March-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,13 +22,13 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'claw_treadmill';
-settings.ball = 1;
+settings.parquet_file = '9A_treadmill_platform';
+settings.ball = 0;
 settings.platform = 0;
-settings.transition_type = 'onset'; % 'onset' 'offset'
+settings.transition_type = 'offset'; % 'onset' 'offset'
 settings.transition_parameter = 'L1_move';
 settings.parameters = {'calcium_norm','predicted_calcium_norm'};
-settings.L1C_flex_thresholds = [70,90]; 
+settings.L1C_flex_thresholds = [0,360]; 
 settings.win_pre_transition = .5; 
 settings.win_post_transition = .5; 
 settings.baseline_type = 'mean_pre'; % 'mean_pre' 'mean_post' 'min'
@@ -133,7 +133,7 @@ for iTrial = 1:numel(trials)
                 if ~any(data_trial.analyze(idx_win)==0) 
                     include_trans = true;
                 end
-            elseif strcmp(settings.transition_parameter,'L1_move')
+            else
                 if strcmp(settings.transition_type,'onset')
                     if ~any(data_trial.analyze(idx_win)==0) ...
                             && ~any(data_trial.L1_other(idx_win)==1) ...
@@ -223,6 +223,7 @@ for iTrial = 1:numel(trials)
 end
 clearvars iTrial 
 
+
 % Calculate animal means
 animal_id = unique(transitions.animal_id);
 n_mean = 0;
@@ -256,7 +257,7 @@ disp(['Number of animals: ', num2str(length(n_trans_per_animal))])
 disp(['Number of transitions per animal: ', num2str(n_trans_per_animal)])
 
 % Plot mean transitions
-parameter_to_plot = 'predicted_calcium_norm';
+parameter_to_plot = 'calcium_norm';
 y1 = transitions.(['mean_',parameter_to_plot]);
 y2 = transitions.(['grand_mean_',parameter_to_plot]);
 y3 = transitions.(['sem_',parameter_to_plot]);
@@ -270,3 +271,56 @@ plot(transitions.time, y2+y3, 'color', [0,0,0], 'linewidth', 2)
 plot(transitions.time, y2-y3, 'color', [0,0,0], 'linewidth',2)
 hold off
 set(gca,'Color','none')
+
+
+% Calculate predicted delta calcium and measured delta calcium  
+animal_id = unique(transitions.animal_id);
+n_mean = 0;
+idx_trans = settings.win_pre_transition*settings.sampling_rate;
+for iParam = 1:numel(settings.parameters) 
+        transitions.(['mean_pre_',settings.parameters{iParam}]) = nan(100,numel(animal_id));
+        transitions.(['mean_post_',settings.parameters{iParam}]) = nan(100,numel(animal_id));
+end
+for iAnimal = 1:numel(animal_id)
+    n_mean = n_mean+1;
+    for iParam = 1:numel(settings.parameters) 
+        n_trans = sum(transitions.animal_id==animal_id(iAnimal));
+        transitions.(['mean_pre_',settings.parameters{iParam}])(1:n_trans,n_mean) = ...
+            mean(transitions.(settings.parameters{iParam})(1:idx_trans, transitions.animal_id==animal_id(iAnimal)));
+        transitions.(['mean_post_',settings.parameters{iParam}])(1:n_trans,n_mean) = ...
+            mean(transitions.(settings.parameters{iParam})(idx_trans:end, transitions.animal_id==animal_id(iAnimal)));
+    end
+    clearvars iParam
+end
+clearvars iAnimal idx_trans
+ 
+% % Plot difference in measured and predicted delta calcium 
+% y1 = transitions.mean_post_predicted_calcium_norm;
+% y2 = transitions.mean_post_calcium_norm;
+% y1 = reshape(y1,[],1);
+% y2 = reshape(y2,[],1);
+% y1 = abs(y1);
+% y2 = abs(y2);
+% y = y2-y1;
+% y(isnan(y)) = [];
+% 
+% figure
+% boxplot(y)
+% a = get(get(gca,'children'),'children');   
+% set(a(1),'Marker','.','MarkerEdgeColor',[0,0,0])
+% for iProp = 1:numel(a)
+%     set(a(iProp),'Color',[0,0,0])
+% end
+% clearvars iProp
+% set(a(4),'linestyle','none')
+% set(a(5),'linestyle','none')
+% set(a(6),'linestyle','-')
+% set(a(7),'linestyle','-')
+% % Kernel density estimation  
+% [f,xi] = ksdensity(y);
+% hold on
+% plot(1-normalize(f,'range')*0.2,xi,'color',[0,0,0])
+% hold off
+% set(gca,'Color','none','XTickLabel','')
+% ylabel('Measured - predicted calcium')
+% ylim([-0.5,0.5])
