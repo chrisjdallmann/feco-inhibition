@@ -1,4 +1,4 @@
-# Dallmann-2024
+# feco-inhibition
 This repository contains code for recreating figures in:
 
 Dallmann CJ, Luo Y, Agrawal S, Chou GM, Cook A, Brunton BW, Tuthill JC (2024): Presynaptic inhibition selectively suppresses leg proprioception in behaving Drosophila. bioRxiv 2023.10.20.563322. doi: https://doi.org/10.1101/2023.10.20.563322 
