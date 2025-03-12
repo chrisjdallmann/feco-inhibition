@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 03-March-2025
+% Last revision: 11-March-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,13 +22,13 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'claw_treadmill';
+settings.parquet_file = 'club_treadmill_removal';
 settings.ball = 1;
 settings.platform = 0;
 settings.epoch_type = 'L1_rest'; 
 settings.parameters = {'calcium_norm','predicted_calcium_norm','L1C_flex'};
 settings.min_epoch_win = 1; 
-settings.plot_trials = true;
+settings.plot_trials = false;
 settings.parameters_to_plot = {'analyze','L1_move','ball',...
     'L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
 
@@ -173,8 +173,7 @@ disp(['Number of animals: ', num2str(length(n_epochs_per_animal))])
 disp(['Number of epochs per animal: ', num2str(n_epochs_per_animal)])
 
 % Plot boxplot of specific epoch type with kernel density estimation
-% Boxplot
-y = epochs.(['predicted_calcium_norm_',settings.epoch_type]); 
+y = epochs.(['calcium_norm_',settings.epoch_type]); 
 h = figure;
 h.Position(3) = 300;
 hold on
@@ -197,19 +196,19 @@ plot(1-normalize(f,'range')*0.2,xi,'color',[0,0,0])
 hold off
 set(gca,'Color','none')
 
-% Plot epochs against epochs with binned mean
-y = epochs.predicted_calcium_norm_L1_rest; 
-x = epochs.L1C_flex_L1_rest; 
-figure
-hold on
-scatter(x,y,[],[0,0,0],'filled')
-set(gca,'Color','none')
-bins = 30:10:140;
-val = [];
-for iBin = 1:numel(bins)-1
-    idx_trial = find(x>=bins(iBin) & x<bins(iBin+1));
-    val = [val, nanmean(y(idx_trial))];
-end
-x = 35:10:135;
-y = val; 
-plot(x,y)
+% % Plot epochs against epochs with binned mean
+% y = epochs.predicted_calcium_norm_L1_rest; 
+% x = epochs.L1C_flex_L1_rest; 
+% figure
+% hold on
+% scatter(x,y,[],[0,0,0],'filled')
+% set(gca,'Color','none')
+% bins = 30:10:140;
+% val = [];
+% for iBin = 1:numel(bins)-1
+%     idx_trial = find(x>=bins(iBin) & x<bins(iBin+1));
+%     val = [val, nanmean(y(idx_trial))];
+% end
+% x = 35:10:135;
+% y = val; 
+% plot(x,y)
