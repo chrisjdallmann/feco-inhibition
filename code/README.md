@@ -9,23 +9,31 @@ The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expressi
 
 # Datasets
 `claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
+
 `claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (from Mamiya et al. 2018). 
 
 `hook_flexion_01_treadmill_platform.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during behavior on and off the treadmill and passive leg movements with the platform.
+
 `hook_flexion_01_magnet.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet. 
+
 `hook_flexion_01_magnet_Mamiya2018.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet (from Mamiya et al. 2018). 
 
 `hook_flexion_02_treadmill.parquet`: Calcium imaging data from hook flexion axons (driver line 2) during behavior on and off the treadmill.
 
 `hook_extension_treadmill_platform.parquet`: Calcium imaging data from hook extension axons during behavior on and off the treadmill and passive leg movements with the platform.
+
 `hook_extension_magnet.parquet`: Calcium imaging data from hook extension axons during passive leg movements with the magnet.
 
 `club_treadmill.parquet`: Calcium imaging data from club axons during behavior on and off the treadmill.
+
 `club_treadmill_removal.parquet`: Calcium imaging data from club axons when the treadmill was removed during the recording. 
+
 `club_magnet_Mamiya2018.parquet`: Calcium imaging data from club axons during passive leg movements with the magnet (from Mamiya et al. 2018). 
 
 `9A_treadmill_platform.parquet`: Calcium imaging data from 9A axons during behavior on and off the treadmill and passive leg movements with the platform.
+
 `9A_CsChrimson.parquet`: Behavioral data for optogenetic activation of 9A neurons in tethered flies on the treadmill. 
+
 `9A_GtACR1.parquet`: Behavioral data for optogenetic silencing of 9A neurons in tethered flies on the treadmill. 
 
 `web_treadmill.parquet`: Calcium imaging data from web axons during behavior on the treadmill.
