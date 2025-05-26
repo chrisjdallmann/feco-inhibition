@@ -285,7 +285,7 @@ settings.model_activation_function = 'web';
 settings.model_parameters = [];  
 ```
 
-Figure 5I: Run `simulation_run_model.ipynb`. For activating BDN2, set `neurons_to_excite = [10093]`. For activating DNg12, set `neurons_to_excite = [32815, 31635, 32742, 31078, 10107]`. For co-activating the web neuron, append `10107` to list of neurons to excite. Then, run `simulation_parquet_to_csv.ipynb` for each simulation. Finally, run `simulation_plot_results.ipynb` to read out and plot the simulated spike rates for chief 9A neurons in T1L (`100513`), T2L (`13157`), and T3L (`14517`). 
+Figure 5I: Run `simulation_run_model.ipynb`. For activating BDN2, set `neurons_to_excite = [10093]`. For activating DNg12, set `neurons_to_excite = [32815, 31635, 32742, 31078]`. For co-activating the web neuron, append `10107` to list of neurons to excite. Then, run `simulation_parquet_to_csv.ipynb` for each simulation. Finally, run `simulation_plot_results.ipynb` to read out and plot the simulated spike rates for chief 9A neurons in T1L (`100513`), T2L (`13157`), and T3L (`14517`). 
 
 ## Figure S2
 Figure S2A-C: Run `imaging_fit_activation_function.m` with these settings:
