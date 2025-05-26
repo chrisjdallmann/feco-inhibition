@@ -8,6 +8,8 @@ Calcium imaging and behavior figures can be recreated with the Matlab files `ima
 The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expression.m`.
 
 # Datasets
+`rna-seq.xls`: RNA-seq data for hook, claw, and club neurons. 
+
 `claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
 
 `claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (from Mamiya et al. 2018). 
@@ -38,7 +40,10 @@ The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expressi
 
 `web_treadmill.parquet`: Calcium imaging data from web axons during behavior on the treadmill.
 
-`rna-seq.xls`: RNA-seq data for hook, claw, and club neurons.  
+`hook_flexion_03_bdn2.parquet`: Calcium imaging data from hook flexion axons with and without activation of descending neuron BDN2.
+
+`pmt_control.parquet`: GFP fluorescence from FeCO axons following the start-up of the microscope PMT. 
+
 
 ## Figure 1  
 Figure 1D: Run `fanc_synapse_locations.ipynb`.
@@ -780,11 +785,20 @@ Figure S9C: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `'chief_9
 Figure S9D and S9E: Run `fanc_DN_IN_connectivity.ipynb`.
 
 ## Figure S10
-Figure S10A: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `'web'` and run script with `source_index` set to `0`.
+Figure S10B: Run `imaging_BDN2_activation.ipynb`. Set `file_name`to `hook_flexion_03_bdn2.parquet`. Run section `Plot data of specific trial`. For Figure S10B left, set `animal_id = 2` and `trial = 2`. For Figure S10B right, set `animal_id = 2` and `trial = 3`.
 
-Figure S10B: Run `flywire_web_connectivity.ipynb`.
+Figure S10C: Run `imaging_BDN2_activation.ipynb`. Set `file_name`to `hook_flexion_03_bdn2.parquet`. Run section `Align data to stimulus offset `. For Figure S10C left, set `animal_ids = [1,2,3,4,5]`, `trials = [2,4,6,8,10]`, and `stimulus_trials = [2,4,6,8,10]`. For Figure S10 right, set `animal_ids = [1,2,3,4,5]`, `trials = [3,5,7,9,11]`, and `stimulus_trials = [2,4,6,8,10]`.
 
-Figure S10C: Run `imaging_plot_trial.m` with these settings:
+Figure S10D: Run the same code as for Figure S10C, but compute `delta_calcium_exp` or `delta_calcium_control` in between, then plot the the changes in calcium.  
+
+Figure S10E: Run `imaging_BDN2_activation.ipynb`. Set `file_name`to `pmt_control.parquet`. Run section `Align data to stimulus offset `. Set `animal_ids = [1,2,3]`, `trials = [1,2,3,4,5,6,7,8,9,10,11,12]`, and `stimulus_trials = trials`.
+
+## Figure S11
+Figure S11A: Run `manc_9A_web_connectivity.ipynb`. Set `source_name` to `'web'` and run script with `source_index` set to `0`.
+
+Figure S11B: Run `flywire_web_connectivity.ipynb`.
+
+Figure S11C: Run `imaging_plot_trial.m` with these settings:
 ```
 settings.parquet_file = 'web_treadmill';
 settings.trials = "240131_A01_00018";
