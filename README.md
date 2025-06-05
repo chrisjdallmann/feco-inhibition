@@ -14,3 +14,6 @@ This repository contains Python 3 code and MATLAB code.
 The Python code was tested with the packages listed in `requirements.txt`. Currently, this code accesses the Drosophila connectomes via CAVEclient (FANC, FlyWire) or neuprint (MANC), which require an authentication token.
 
 The MATLAB code was tested with MATLAB R2023a.  
+
+## Acknowledgements
+This repository incorporates code for connectome-constrained modeling from https://github.com/philshiu/Drosophila_brain_model, which is licensed under the MIT license and accompanies the paper Shiu PK, Sterne GR, Spiller N et al. (2024): A Drosophila computational brain model reveals sensorimotor processing. Nature 634, 210–219. doi: https://doi.org/10.1038/s41586-024-07763-9.

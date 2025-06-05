@@ -7,6 +7,8 @@ Calcium imaging and behavior figures can be recreated with the Matlab files `ima
 
 The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expression.m`.
 
+The connectome simulation figure can be recreated with the Jupyter Notebooks `simulation_*`. 
+
 # Datasets
 `rna-seq.xls`: RNA-seq data for hook, claw, and club neurons. 
 
