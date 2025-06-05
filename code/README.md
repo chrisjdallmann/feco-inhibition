@@ -46,6 +46,12 @@ The connectome simulation figure can be recreated with the Jupyter Notebooks `si
 
 `pmt_control.parquet`: GFP fluorescence from FeCO axons following the start-up of the microscope PMT. 
 
+The connectome simulation runs on data from the MANC connectome, which can be found in the subfolder `simulation`. 
+`classifications_manc_v1.csv` contains information about each neuron's name, type, and predicted neurotransmitter. 
+`completeness_manc_v1` contains information about the neurons that are included in the simulation.  
+`connectivity_manc_v1.parquet` contains information about the weighted connectivity between neurons. 
+For more information on the data structure, see the original repository for the simulation: https://github.com/philshiu/Drosophila_brain_model. 
+
 
 ## Figure 1  
 Figure 1D: Run `fanc_synapse_locations.ipynb`.
