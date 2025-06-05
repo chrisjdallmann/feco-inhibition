@@ -1,11 +1,11 @@
 # Instructions for recreating figures 
 The following sections show how to recreate the figures in Dallmann et al. (2024) from data that will be available for download on Dryad. 
 
-Connectome figures can be recreated with the Jupyter Notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
-
-Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can also be predicted from scratch within the m-files (see instructions below).  
-
 The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expression.m`.
+
+Calcium imaging and behavior figures can be recreated with the Matlab files `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can be predicted from scratch within the m-files (see instructions below).  
+
+Connectome figures can be recreated with the Jupyter Notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
 
 The connectome simulation figure can be recreated with the Jupyter Notebooks `simulation_*`. 
 
@@ -781,6 +781,14 @@ settings.win_post_transition = .5;
 settings.baseline_type = 'mean_pre'; 
 ```
 Set `settings.transition_type` to `'onset'` or `'offset'`. Plot `calcium_norm` or `predicted_calcium_norm`. 
+
+
+Figure S8D: Run `imaging_plot_trial.m` with these settings:
+```
+settings.parquet_file = '9A_treadmill_platform';
+settings.parameters_to_plot = {'L1_rest','L1_move','L1C_flex','calcium_norm'};
+```
+Set `settings.trials` to either `"20221118_A01_00002"`, `"20221118_A01_00003"`, or `"20221118_A01_00006"`.
 
 To predict the calcium signals from scratch, run the above m-file(s) with the following settings:
 ```
