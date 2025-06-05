@@ -11,7 +11,7 @@ Instructions on how to recreate individual figure panels are given in `code/READ
 ## Requirements 
 This repository contains Python 3 code and MATLAB code. 
 
-The Python code was tested with the packages listed in `requirements.txt`. Currently, this code accesses the Drosophila connectomes via CAVEclient (FANC, FlyWire) or neuprint (MANC), which require an authentication token.
+The Python code was tested with the packages listed in `requirements.txt`. Currently, this code accesses the Drosophila connectomes via CAVEclient (FANC, FlyWire) or neuprint (MANC), which require an authentication token. Installation of the required packages should take 10 minutes.
 
 The MATLAB code was tested with MATLAB R2023a.  
 
