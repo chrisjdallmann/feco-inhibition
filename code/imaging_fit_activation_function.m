@@ -12,7 +12,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 11-March-2025
+% Last revision: 29-July-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,7 +22,8 @@ clear
 settings.parquet_file = 'club_magnet_Mamiya2018';
 settings.model_activation_function = 'club';
 settings.roi = {'L1_x'}; % {'L1_x','L1_y','L1_z'} or {'L1_medial'} or {'L1_x'};
-settings.n_frames_pad = 1000; % Change manually in poly_fun
+
+settings.n_frames_pad = 1000; % If changed, update poly_fun
 
 % Load parquet file 
 [parent_folder, ~] = fileparts(cd);
@@ -159,7 +160,7 @@ clearvars iTrial
 
 
 %% Plot time courses for a specific stimulus
-stimulus_to_plot = 'ramp_hold_flex_first'; % 'ramp_hold_flex_first' or 'ramp_hold_ext_first' 
+stimulus_to_plot = 'ramp_hold_ext_first'; % 'ramp_hold_flex_first' or 'ramp_hold_ext_first' 
 if contains(settings.parquet_file,'claw') || contains(settings.parquet_file,'club')
     roi_to_plot = 'L1_x';
 else  
