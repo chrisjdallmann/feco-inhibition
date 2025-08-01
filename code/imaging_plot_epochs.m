@@ -1,4 +1,4 @@
-% IMAGING_PLOT_EPOCHS.m calculates and plots median values of calcium imaging and behavior data recorded in Dallmann et al. (2024)
+% IMAGING_PLOT_EPOCHS.m calculates and plots median values of calcium imaging and behavior data recorded in Dallmann et al. (2025)
 % The code assumes that the data are stored in the parallel folder ../data/. 
 % 
 % Files required: 
@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 11-March-2025
+% Last revision: 01-August-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,7 +22,7 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'club_treadmill_removal';
+settings.parquet_file = 'claw_treadmill';
 settings.ball = 1;
 settings.platform = 0;
 settings.epoch_type = 'L1_rest'; 

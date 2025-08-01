@@ -1,4 +1,4 @@
-% IMAGING_HOOK_MODEL_EXAMPLE.m plot the response of the hook flexion model to an artifical joint angle time course 
+% IMAGING_HOOK_MODEL_EXAMPLE.m plots the response of the hook flexion model from Dallmann et al. (2025) to an artifical joint angle time course 
 % 
 % Functions/toolboxes required:
 %    imaging_predict_gcamp.m

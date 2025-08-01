@@ -1,4 +1,4 @@
-% IMAGING_PLOT_TRANSITIONS.m finds and plots transitions in calcium imaging and behavior data recorded in Dallmann et al. (2024)
+% IMAGING_PLOT_TRANSITIONS.m finds and plots transitions in calcium imaging and behavior data recorded in Dallmann et al. (2025)
 % The code assumes that the data are stored in the parallel folder ../data/. 
 % 
 % Files required: 
@@ -14,18 +14,18 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 11-March-2025
+% Last revision: 01-August-2025
 
 % ------------- BEGIN CODE -------------
 
-clear
+%clear
 clc
 
 % Settings 
-settings.parquet_file = '9A_treadmill_platform';
-settings.ball = 0;
+settings.parquet_file = 'hook_flexion_01_treadmill_platform';
+settings.ball = 1;
 settings.platform = 0;
-settings.transition_type = 'offset'; % 'onset' 'offset'
+settings.transition_type = 'onset'; % 'onset' 'offset'
 settings.transition_parameter = 'L1_move';
 settings.parameters = {'calcium_norm','predicted_calcium_norm'};
 settings.L1C_flex_thresholds = [0,360]; 

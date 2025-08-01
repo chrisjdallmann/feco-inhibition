@@ -1,4 +1,4 @@
-% IMAGING_PLOT_TRIAL.m plots data of a specified trial recorded in Dallmann et al. (2024)
+% IMAGING_PLOT_TRIAL.m plots data of a specified trial recorded in Dallmann et al. (2025)
 % The code assumes that the data are stored in the parallel folder ../data/. 
 % 
 % Files required: 
@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 11-March-2025
+% Last revision: 01-August-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,9 +22,9 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = 'web_treadmill';
-settings.trials = "240131_A01_00018";
-settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom','L1C_flex','predicted_calcium_norm','calcium_norm','vel_forward'};
+settings.parquet_file = 'claw_treadmill';
+settings.trials = "20200630_A01_00003";
+settings.parameters_to_plot = {'analyze','L1_move','L1C_flex','predicted_calcium_norm','calcium_norm'};
 
 settings.predict_calcium_signals = false;
 settings.model_activation_function = '';

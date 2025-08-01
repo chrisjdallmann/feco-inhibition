@@ -1,4 +1,4 @@
-% IMAGING_FIT_ACTIVATION_FUNCTION.m fits the activation functions used in Dallmann et al. (2024)
+% IMAGING_FIT_ACTIVATION_FUNCTION.m fits the activation functions used in Dallmann et al. (2025)
 % 
 % Files required: 
 %    *_Mamiya2018.parquet

@@ -1,4 +1,4 @@
-% RNA_SEQ_PLOT_EXPRESSION.m plots RNA-seq data in Dallmann et al. (2024)
+% RNA_SEQ_PLOT_EXPRESSION.m plots RNA-seq data in Dallmann et al. (2025)
 % 
 % Files required: 
 %    rna-seq.xlsx

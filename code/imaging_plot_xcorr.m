@@ -1,4 +1,4 @@
-% IMAGING_PLOT_XCORR.m calculates and plots cross-correlation data in Dallmann et al. (2024)
+% IMAGING_PLOT_XCORR.m calculates and plots cross-correlation data in Dallmann et al. (2025)
 % The code assumes that the data are stored in the parallel folder ../data/. 
 % 
 % Files required: 
@@ -14,7 +14,7 @@
 
 % Author: Chris J. Dallmann 
 % Affiliation: University of Wuerzburg
-% Last revision: 11-March-2025
+% Last revision: 01-August-2025
 
 % ------------- BEGIN CODE -------------
 
@@ -22,9 +22,9 @@ clear
 clc
 
 % Settings 
-settings.parquet_file = '9A_treadmill_platform';
-settings.trial_to_highlight = "20221118_A01_00023";
-settings.ball = 0;
+settings.parquet_file = 'claw_treadmill';
+settings.trial_to_highlight = "20200630_A01_00003";
+settings.ball = 1;
 settings.platform = 0;
 settings.plot_trials = false;
 settings.parameters_to_plot = {'analyze','L1_move','L1_walk','L1_groom',...
