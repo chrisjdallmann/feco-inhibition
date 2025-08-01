@@ -1,16 +1,22 @@
 # Instructions for recreating figures 
-The following sections show how to recreate the figures in Dallmann et al. (2025) from data that will be available for download on Dryad. 
+The following sections show how to recreate the figures in Dallmann et al. (2025). 
 
-The RNA-seq figures can be recreated with the Matlab file `rna-seq_plot_expression.m`.
+Download the data from Dryad:  
 
-Calcium imaging and behavior figures can be recreated with the Matlab scripts `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can be predicted from scratch within the m-files (see instructions below).   
+Store the data in the `data` folder of this repository.   
+
+The RNA-seq figures can be recreated with the Matlab script `rna-seq_plot_expression.m`.
+
+Calcium imaging and behavior figures can be recreated with the Matlab scripts `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can be predicted from scratch within the scripts (see below).   
 
 Connectome figures can be recreated with the Jupyter notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
 
 The connectome simulation figure can be recreated with the Jupyter notebooks `simulation_*`. 
 
-# Datasets
-`rna-seq.xls`: RNA-seq data for hook, claw, and club neurons. 
+The 9A activation and silencing figure can be recreated with the Jupyter notebook `behavior_9A_activation_silencing.ipynb`.
+
+## Overview of datasets
+`rna-seq.xlsx`: RNA-seq data for hook, claw, and club neurons. 
 
 `claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
 
@@ -36,15 +42,21 @@ The connectome simulation figure can be recreated with the Jupyter notebooks `si
 
 `9A_treadmill_platform.parquet`: Calcium imaging data from 9A axons during behavior on and off the treadmill and passive leg movements with the platform.
 
-`9A_CsChrimson.parquet`: Behavioral data for optogenetic activation of 9A neurons in tethered flies on the treadmill. 
+`9A_activation.pq`: Behavioral data for optogenetic activation of 9A neurons in tethered walking flies. 
 
-`9A_GtACR1.parquet`: Behavioral data for optogenetic silencing of 9A neurons in tethered flies on the treadmill. 
+`9A_silencing.pq`: Behavioral data for optogenetic silencing of 9A neurons in tethered walking flies. 
 
-`web_treadmill.parquet`: Calcium imaging data from web axons during behavior on the treadmill.
+`control_activation.pq`: Behavioral data for optogenetic activation of tethered walking control flies. 
 
-`hook_flexion_03_bdn2.parquet`: Calcium imaging data from hook flexion axons with and without activation of descending neuron BDN2.
+`control_silencing.pq`: Behavioral data for optogenetic silencing of tethered walking control flies. 
+
+`web_treadmill.parquet`: Calcium imaging data from DNg74 (web) axons during behavior on the treadmill.
+
+`hook_flexion_03_bdn2.parquet`: Calcium imaging data from hook flexion axons with and without activation of descending neuron DNg100 (BDN2).
 
 `pmt_control.parquet`: GFP fluorescence from FeCO axons following the start-up of the microscope PMT. 
+
+`fanc_dn_information.xlsx`: Connectome identifiers, predicted neurotransmitters, and community names for descending neurons of interest in the FANC connectome. 
 
 The connectome simulation runs on data from the MANC connectome, which can be found in the subfolder `simulation`. 
 `classifications_manc_v1.csv` contains information about each neuron's name, type, and predicted neurotransmitter. 
