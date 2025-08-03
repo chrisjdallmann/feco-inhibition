@@ -5,64 +5,15 @@ Download the data from Dryad:
 
 Store the data in the `data` folder of this repository.   
 
-The RNA-seq figures can be recreated with the Matlab script `rna-seq_plot_expression.m`.
-
 Calcium imaging and behavior figures can be recreated with the Matlab scripts `imaging_*.m`. The datasets already contain the predicted calcium signals, but the signals can be predicted from scratch within the scripts (see below).   
+
+The RNA-seq figures can be recreated with the Matlab script `rna-seq_plot_expression.m`.
 
 Connectome figures can be recreated with the Jupyter notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
 
-The connectome simulation figure can be recreated with the Jupyter notebooks `simulation_*`. 
+The connectome simulation figure can be recreated with the Jupyter notebooks `simulation_*`. For more information on the data structures, see the original repository for the simulation: https://github.com/philshiu/Drosophila_brain_model. 
 
 The 9A activation and silencing figure can be recreated with the Jupyter notebook `behavior_9A_activation_silencing.ipynb`.
-
-## Overview of datasets
-`rna-seq.xlsx`: RNA-seq data for hook, claw, and club neurons. 
-
-`claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
-
-`claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (from Mamiya et al. 2018). 
-
-`hook_flexion_01_treadmill_platform.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during behavior on and off the treadmill and passive leg movements with the platform.
-
-`hook_flexion_01_magnet.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet. 
-
-`hook_flexion_01_magnet_Mamiya2018.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet (from Mamiya et al. 2018). 
-
-`hook_flexion_02_treadmill.parquet`: Calcium imaging data from hook flexion axons (driver line 2) during behavior on and off the treadmill.
-
-`hook_extension_treadmill_platform.parquet`: Calcium imaging data from hook extension axons during behavior on and off the treadmill and passive leg movements with the platform.
-
-`hook_extension_magnet.parquet`: Calcium imaging data from hook extension axons during passive leg movements with the magnet.
-
-`club_treadmill.parquet`: Calcium imaging data from club axons during behavior on and off the treadmill.
-
-`club_treadmill_removal.parquet`: Calcium imaging data from club axons when the treadmill was removed during the recording. 
-
-`club_magnet_Mamiya2018.parquet`: Calcium imaging data from club axons during passive leg movements with the magnet (from Mamiya et al. 2018). 
-
-`9A_treadmill_platform.parquet`: Calcium imaging data from 9A axons during behavior on and off the treadmill and passive leg movements with the platform.
-
-`9A_activation.pq`: Behavioral data for optogenetic activation of 9A neurons in tethered walking flies. 
-
-`9A_silencing.pq`: Behavioral data for optogenetic silencing of 9A neurons in tethered walking flies. 
-
-`control_activation.pq`: Behavioral data for optogenetic activation of tethered walking control flies. 
-
-`control_silencing.pq`: Behavioral data for optogenetic silencing of tethered walking control flies. 
-
-`web_treadmill.parquet`: Calcium imaging data from DNg74 (web) axons during behavior on the treadmill.
-
-`hook_flexion_03_bdn2.parquet`: Calcium imaging data from hook flexion axons with and without activation of descending neuron DNg100 (BDN2).
-
-`pmt_control.parquet`: GFP fluorescence from FeCO axons following the start-up of the microscope PMT. 
-
-`fanc_dn_information.xlsx`: Connectome identifiers, predicted neurotransmitters, and community names for descending neurons of interest in the FANC connectome. 
-
-The connectome simulation runs on data from the MANC connectome, which can be found in the subfolder `simulation`. 
-`classifications_manc_v1.csv` contains information about each neuron's name, type, and predicted neurotransmitter. 
-`completeness_manc_v1` contains all neurons that can be included in the simulation.  
-`connectivity_manc_v1.parquet` contains information about the weighted connectivity between neurons. 
-For more information on the data structure, see the original repository for the simulation: https://github.com/philshiu/Drosophila_brain_model. 
 
 
 ## Figure 1  
