@@ -6,7 +6,7 @@ Dallmann CJ, Luo Y, Agrawal S, Mamiya A, Chou GM, Cook A, Sustar A, Brunton BW, 
 Data is available for download from Dryad: 
 
 ## Usage
-Instructions on how to recreate individual figure panels are given in `code/README.md`.
+Instructions on how to recreate individual figure panels are given in `code/README.md`. Information on the datasets is given on Dryad and in `data/README.md`.
 
 ## Requirements 
 This repository contains Python 3 code and MATLAB code. 
