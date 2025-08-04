@@ -1,5 +1,5 @@
 # Overview of datasets
-## Calcium imaging in behaving animals
+## Calcium imaging data from behaving animals
 `claw_treadmill.parquet`: Calcium imaging data from claw axons during behavior on and off the treadmill.  
 
 `hook_flexion_01_treadmill_platform.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during behavior on and off the treadmill and passive leg movements with the platform.
@@ -16,22 +16,22 @@
 
 `web_treadmill.parquet`: Calcium imaging data from DNg74 (web) axons during behavior on the treadmill.
 
-## Calcium imaging in fully restrained animals
+## Calcium imaging data from fully restrained animals
 `hook_flexion_01_magnet.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet. 
 
 `hook_extension_magnet.parquet`: Calcium imaging data from hook extension axons during passive leg movements with the magnet.
 
-`claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (from Mamiya et al. 2018). Used to tune the computational model. 
+`claw_magnet_Mamiya2018.parquet`: Calcium imaging data from claw axons during passive leg movements with the magnet (Mamiya et al. 2018). Used to tune the computational model. 
 
-`hook_flexion_01_magnet_Mamiya2018.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet (from Mamiya et al. 2018). Used to tune the computational model. 
+`hook_flexion_01_magnet_Mamiya2018.parquet`: Calcium imaging data from hook flexion axons (driver line 1) during passive leg movements with the magnet (Mamiya et al. 2018). Used to tune the computational model. 
 
-`club_magnet_Mamiya2018.parquet`: Calcium imaging data from club axons during passive leg movements with the magnet (from Mamiya et al. 2018). Used to tune the computational model. 
+`club_magnet_Mamiya2018.parquet`: Calcium imaging data from club axons during passive leg movements with the magnet (Mamiya et al. 2018). Used to tune the computational model. 
 
 `hook_flexion_03_bdn2.parquet`: Calcium imaging data from hook flexion axons with and without activation of descending neuron DNg100 (BDN2).
 
 `pmt_control.parquet`: GFP fluorescence from FeCO axons following the start-up of the microscope PMT. 
 
-## Optogenetic activation and silencing in behaving animals 
+## Optogenetic activation and silencing data from behaving animals 
 `9A_activation.parquet`: Behavioral data for optogenetic activation of 9A neurons in tethered walking flies. 
 
 `9A_silencing.parquet`: Behavioral data for optogenetic silencing of 9A neurons in tethered walking flies. 
