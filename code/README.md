@@ -1,7 +1,7 @@
 # Instructions for recreating figures 
 The following sections show how to recreate the figures in Dallmann et al. (2025). 
 
-Download the data from Dryad:  
+Download the data from Dryad: https://doi.org/10.5061/dryad.gqnk98t16 
 
 Store the data in the `data` folder of this repository.   
 
