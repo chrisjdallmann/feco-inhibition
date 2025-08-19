@@ -9,7 +9,7 @@ Calcium imaging and behavior figures can be recreated with the Matlab scripts `i
 
 The RNA-seq figures can be recreated with the Matlab script `rna-seq_plot_expression.m`.
 
-Connectome figures can be recreated with the Jupyter notebooks `fanc_*`, `manc_*`, and `flywire_*`. 
+Connectome figures can be recreated with the Jupyter notebooks `fanc_*.ipynb`, `manc_*.ipynb`, and `flywire_*.ipynb`. 
 
 The connectome simulation figure can be recreated with the Jupyter notebooks `simulation_*`. For more information on the data structures, see the original repository for the simulation: https://github.com/philshiu/Drosophila_brain_model. 
 
