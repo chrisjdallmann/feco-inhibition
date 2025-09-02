@@ -1,7 +1,7 @@
 # feco-inhibition
 This repository contains code for recreating figures in:
 
-Dallmann CJ, Luo Y, Agrawal S, Mamiya A, Chou GM, Cook A, Sustar A, Brunton BW, Tuthill JC (2025): Selective presynaptic inhibition of leg proprioception in behaving *Drosophila*. Nature. 
+Dallmann CJ, Luo Y, Agrawal S, Mamiya A, Chou GM, Cook A, Sustar A, Brunton BW, Tuthill JC (2025): Selective presynaptic inhibition of leg proprioception in behaving *Drosophila*. Nature, in press. 
 
 Data is available for download from Dryad: https://doi.org/10.5061/dryad.gqnk98t16.
 
