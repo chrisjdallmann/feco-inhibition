@@ -41,13 +41,13 @@
 `control_silencing.parquet`: Behavioral data for optogenetic silencing of tethered walking control flies. 
 
 ## RNA-seq data
-`rna-seq.xlsx`: RNA-seq data for hook, claw, and club neurons. 
+`rna-seq.xlsx`: RNA-seq data for claw, hook, and club neurons. 
 
 ## Connectome data 
 `fanc_dn_information.xlsx`: Connectome identifiers, predicted neurotransmitters, and community names for descending neurons of interest in the FANC connectome. 
 
-`manc_v1_classifications.csv`: Connectome identifiers, names, and predicted neurotransmitter for neurons of the MANC connectome. 
+`manc_v1_classifications.csv`: Classification of neurons of the MANC connectome (version 1.0).
 
-`manc_v1_completeness.csv`: Connectome identifiers for neurons of the MANC connectome that can be included in the simulation.  
+`manc_v1_completeness.csv`: Connectome identifiers for neurons of the MANC connectome (version 1.0) that can be included in the simulation. 
 
-`manc_v1_connectivity.parquet`: Weighted synaptic connectivity between neurons of the MANC connectome.
+`manc_v1_connectivity.parquet`: Weighted synaptic connectivity between neurons of the MANC connectome (version 1.0).
